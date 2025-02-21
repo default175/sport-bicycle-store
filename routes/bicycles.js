@@ -1,6 +1,6 @@
 const express = require("express");
 const Bicycle = require("../models/Bicycle");
-const { auth, admin } = require("../middleware/authMiddleware");
+const { auth, admin } = require("../middleware/authMiddleware.js");
 const router = express.Router();
 
 // ✅ Получить все велосипеды (доступно всем)
