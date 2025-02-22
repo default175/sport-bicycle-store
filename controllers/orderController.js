@@ -1,7 +1,7 @@
 const Order = require("../models/Order");
 const Bicycle = require("../models/Bicycle");
 
-// ✅ Создание заказа
+
 const createOrder = async (req, res) => {
     try {
         const { bicycleId, quantity } = req.body;
@@ -17,10 +17,10 @@ const createOrder = async (req, res) => {
             return res.status(400).json({ message: "Not enough stock available" });
         }
 
-        // ✅ Автоматически рассчитываем totalPrice (цена * количество)
+
         const totalPrice = bicycle.price * quantity;
 
-        // ✅ Уменьшаем stock после покупки
+
         bicycle.stock -= quantity;
         await bicycle.save();
 
@@ -28,7 +28,7 @@ const createOrder = async (req, res) => {
             user: req.user.id,
             bicycle: bicycleId,
             quantity,
-            totalPrice // ✅ Добавляем totalPrice в заказ
+            totalPrice
         });
 
         await order.save();
@@ -39,7 +39,7 @@ const createOrder = async (req, res) => {
 };
 
 
-// ✅ Получение всех заказов (только админ)
+
 const getOrders = async (req, res) => {
     try {
         const orders = await Order.find().populate("user", "name email").populate("bicycle", "name price");
@@ -49,7 +49,7 @@ const getOrders = async (req, res) => {
     }
 };
 
-// ✅ Получение заказов пользователя
+
 const getUserOrders = async (req, res) => {
     try {
         const orders = await Order.find({ user: req.user.id }).populate("bicycle", "name price");
@@ -59,7 +59,7 @@ const getUserOrders = async (req, res) => {
     }
 };
 
-// ✅ Обновление статуса заказа (только админ)
+
 const updateOrderStatus = async (req, res) => {
     try {
         const { status } = req.body;

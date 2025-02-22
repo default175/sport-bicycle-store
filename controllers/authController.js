@@ -24,7 +24,7 @@ const registerUser = async (req, res) => {
     }
 };
 
-// ✅ Функция для входа (логина)
+
 const loginUser = async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -35,13 +35,13 @@ const loginUser = async (req, res) => {
             return res.status(400).json({ message: "Invalid email or password" });
         }
 
-        // Проверяем пароль
+
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
             return res.status(400).json({ message: "Invalid email or password" });
         }
 
-        // Генерируем токен
+
         const token = jwt.sign({ id: user._id, isAdmin: user.isAdmin }, process.env.JWT_SECRET, { expiresIn: "1d" });
 
         res.status(200).json({ message: "Login successful", token });
